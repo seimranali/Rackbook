@@ -1,0 +1,49 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Rackbook\\Rackbook.WebUI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Rackbook.WebUI.bundle.scp.css",
+      "PackagePath": "staticwebassets\\Rackbook.WebUI.jip6pq7flw.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\Images\\background_image_overlay.jpg",
+      "PackagePath": "staticwebassets\\Images\\background_image_overlay.jpg"
+    },
+    {
+      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\Images\\background_image_overlay.png",
+      "PackagePath": "staticwebassets\\Images\\background_image_overlay.png"
+    },
+    {
+      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\js\\boot.js",
+      "PackagePath": "staticwebassets\\js\\boot.js"
+    },
+    {
+      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\notfound.html",
+      "PackagePath": "staticwebassets\\notfound.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Rackbook.WebUI.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Rackbook.WebUI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Rackbook.WebUI.props",
+      "PackagePath": "build\\Rackbook.WebUI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Rackbook.WebUI.props",
+      "PackagePath": "buildMultiTargeting\\Rackbook.WebUI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Rackbook.WebUI.props",
+      "PackagePath": "buildTransitive\\Rackbook.WebUI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

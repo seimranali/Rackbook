@@ -1,0 +1,332 @@
+﻿@page "/itemgroup"
+@using Rackbook.Application
+@using Rackbook.Application.ManageItemGroup
+@using Rackbook.Application.ManageItemGroup.Queries
+@inject IMediator mediator
+@inject DialogService DialogService
+@implements IDisposable
+
+<RadzenContentContainer>
+
+    <RadzenRow class="mb-2">
+        <RadzenColumn Size="4">
+            <RadzenText TextStyle="TextStyle.DisplayH5" TagName="TagName.H5" Text="Item Groups" />
+        </RadzenColumn>
+        <RadzenColumn Size="8">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center">
+                <RadzenBreadCrumb>
+                    <Template Context="item">
+                        <RadzenBadge IsPill="true" Text="@item.Text"></RadzenBadge>
+                    </Template>
+                    <ChildContent>
+                        <RadzenBreadCrumbItem Text="Setup" />
+                        <RadzenBreadCrumbItem Text="Inventory" />
+                        <RadzenBreadCrumbItem Icon="add" Text="Item Groups" />
+                    </ChildContent>
+                </RadzenBreadCrumb>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+
+
+    <RadzenCard>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="0.15rem">
+            <RadzenFormField Text="Filter" class="rz-w-25">
+                <RadzenTextBox typeof="search" aria-label="find" @bind-Value="FilterInput" Name="FilterInput" Placeholder="Filter..." class="rz-search-input rz-w-100" @oninput=OnInputFindItemGroup @onkeypress:stopPropagation="true">
+
+                </RadzenTextBox>
+            </RadzenFormField>
+            <RadzenButton Size="ButtonSize.Medium" ButtonStyle="ButtonStyle.Secondary" Variant="Variant.Flat" Shade="Shade.Lighter" Text="Add new" Icon="add" Click=OnNew>
+
+            </RadzenButton>
+        </RadzenStack>
+        <RadzenDataGrid @ref=@grid TItem="ItemGroup" Data=Data LoadData=LoadData IsLoading="IsLoadingGrid" Count="TotalRowCount" PageSize="PageSize" ShowPagingSummary="true" AllowPaging="true" AllowAlternatingRows="false" AllowFiltering="true" AllowSorting="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterDelay="500" Style="height:74vh !important;margin-top:5px !important;" @bind-Value=SelectedRow SelectionMode="DataGridSelectionMode.Single">
+            <Columns>
+                <RadzenDataGridColumn TItem="ItemGroup" Property="ItemGroupName" Title="Item Group Name">
+
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ItemGroup" Property="ItemGroupDescription" Title="Item Group Description">
+
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ItemGroup" Property="IsActive" Title="Status">
+                    <Template Context="item">
+                        <RadzenBadge IsPill="true" BadgeStyle="@(item.IsActive ? BadgeStyle.Success:BadgeStyle.Light)" Variant="Variant.Flat" Shade="Shade.Lighter" Text="@(item.IsActive ? "Active":"Inactive")"></RadzenBadge>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ItemGroup" Property="ItemGroupID" Title="Action">
+                    <Template Context="item">
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start">
+                            <RadzenButton Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Warning" Variant="Variant.Flat" Shade="Shade.Lighter" Icon="edit" Click=@(()=> OnEdit(item.ItemGroupID))></RadzenButton>
+                            <RadzenButton Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter" Icon="delete" Click=@(()=> OnDelete(item.ItemGroupID))></RadzenButton>
+                        </RadzenStack>
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+
+</RadzenContentContainer>
+
+
+
+@code {
+
+    bool rendered;
+    bool IsLoadingGrid;
+    bool IsLoadingPage;
+    bool IsEditMode;
+
+
+    int PageSize=10;
+    int TotalRowCount;
+
+    string? FilterInput;
+
+    RadzenDataGrid<ItemGroup>? grid;
+
+    List<ItemGroup>? Data;
+
+    IList<ItemGroup> SelectedRow = new List<ItemGroup>();
+
+    GenericResult<ItemGroup>? Result;
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsLoadingPage = true;
+        try
+        {
+
+            DialogService.OnSideClose += Close;
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+        finally
+        {
+
+            IsLoadingPage = false;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            rendered = true;
+            
+        }
+
+
+        await Task.CompletedTask;
+    }
+
+    async Task OnNew()
+    {
+        await DialogService.OpenSideAsync<_ItemGroupPage>("Create Item Group",
+       new Dictionary<string, object>()
+                                       {
+            {"id", null}
+
+                                       }, new SideDialogOptions
+                                       {
+                                           Position = DialogPosition.Right,
+
+                                           Height = "98vh",
+                                           Width = "480px",
+                                           Style = "top:10px;right:10px;bottom:15px;"
+
+                                       });
+    }
+
+    async Task OnEdit(int id)
+    {
+        try
+        {
+            await DialogService.OpenSideAsync<_ItemGroupPage>("Create Item Group",
+        new Dictionary<string, object>()
+                                            {
+            {"id", id}
+
+                                            }, new SideDialogOptions
+                                            {
+                                                Position = DialogPosition.Right,
+
+                                                Height = "98vh",
+                                                Width = "480px",
+                                                Style = "top:10px;right:10px;bottom:15px;"
+
+                                            });
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+    async Task OnDelete(int id)
+    {
+        try
+        {
+            bool? flg = await DialogService.Confirm("Are you sure!, You want to delete this record?", "Confirm", new ConfirmOptions { OkButtonText="Yes", CancelButtonText="No" });
+            if (flg.HasValue)
+            {
+                if (flg.Value)
+                {
+                    Result = await mediator.Send(new DeleteItemGroupCommand() { Id = id });
+
+                    
+
+                    if (Result is not null)
+                    {
+                        if (Result.Status)
+                        {
+                            await DialogService.Alert(Result.Message, "Inform");
+                            await OnReset();
+                        }
+                        else
+                        {
+                            await DialogService.Alert(Result.Message, "Error");
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+    private void OnInputFindItemGroup(ChangeEventArgs args)
+    {
+        try
+        {
+
+            FilterInput = args.Value?.ToString();
+            
+            if (grid is not null)
+                grid.Reload();
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+
+    async Task OnReset()
+    {
+        try
+        {
+            SelectedRow = new List<ItemGroup>();
+            IsEditMode = false;
+            if (grid is not null)
+                await grid.Reload();
+            
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+    public async Task LoadData(LoadDataArgs args)
+    {
+        IsLoadingGrid = true;
+        try
+        {
+
+            await Task.Yield();
+
+            IQueryable<ItemGroup> query = await mediator.Send(new ReadItemGroup() {  });
+
+            if (args is not null)
+            {
+                if (!string.IsNullOrEmpty(args.Filter))
+                    query = query.Where(args.Filter);
+
+
+
+                if (!string.IsNullOrEmpty(FilterInput))
+                {
+                    query = query.Where(x =>
+                        x.ItemGroupName.ToLower().Contains(FilterInput.ToLower()) ||
+                    x.ItemGroupDescription.ToLower().Contains(FilterInput.ToLower()));
+                }
+
+                if (!string.IsNullOrEmpty(args.OrderBy))
+                    query = query.OrderBy(args.OrderBy);
+                else
+                    query = query.OrderByDescending(o => o.ItemGroupID);
+
+
+                TotalRowCount = query.Count();
+
+                if (args.Skip.HasValue && args.Top.HasValue)
+                {
+                    if (args.Top.Value == 0)
+                        query = query.Skip(args.Skip.Value).Take(PageSize);
+                    else
+                        query = query.Skip(args.Skip.Value).Take(args.Top.Value);
+                }
+                else
+                {
+                    query = query.Skip(0).Take(PageSize);
+                }
+
+            }
+
+            Data = await query.ToListAsync();
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+        finally
+        {
+            IsLoadingGrid = false;
+        }
+
+    }
+
+    public async void Close(dynamic result)
+    {
+        if (result is ItemGroup)
+            await grid.Reload();
+    }
+
+    bool IsDisposed;
+    private void Disposed(bool IsDisposing)
+    {
+        if (IsDisposing)
+        {
+            if (grid is not null)
+                grid.Dispose();
+
+            if (DialogService is not null)
+                DialogService.Dispose();
+        }
+        IsDisposed = true;
+    }
+
+    public void Dispose()
+    {
+        Disposed(true);
+        GC.SuppressFinalize(this);
+    }
+
+}

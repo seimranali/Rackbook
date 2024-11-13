@@ -1,0 +1,13 @@
+D:\Rackbook\Rackbook.Domain\bin\Debug\net8.0\Rackbook.Domain.deps.json
+D:\Rackbook\Rackbook.Domain\bin\Debug\net8.0\Rackbook.Domain.dll
+D:\Rackbook\Rackbook.Domain\bin\Debug\net8.0\Rackbook.Domain.pdb
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\Rackbook.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\Rackbook.Domain.AssemblyInfoInputs.cache
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\Rackbook.Domain.AssemblyInfo.cs
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\Rackbook.Domain.csproj.CoreCompileInputs.cache
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\Rackbook.Domain.dll
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\refint\Rackbook.Domain.dll
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\Rackbook.Domain.pdb
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\ref\Rackbook.Domain.dll
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\Rackbook.Domain.csproj.AssemblyReference.cache
+D:\Rackbook\Rackbook.Domain\obj\Debug\net8.0\Rackbook.Domain.sourcelink.json

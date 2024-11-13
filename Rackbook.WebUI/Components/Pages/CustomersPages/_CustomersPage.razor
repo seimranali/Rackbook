@@ -1,0 +1,366 @@
+﻿@using Rackbook.Application
+@using Rackbook.Application.ManageAccountDetail.Queries
+@using Rackbook.Application.ManageCountry.Queries
+@using Rackbook.Application.ManageCustomers
+@using Rackbook.Application.ManageCustomers.Queries
+@using Rackbook.Application.ManageCustomersAddress.Queries
+@using Rackbook.Application.ManageProvince.Queries
+@using Rackbook.Domain.Models
+@inject IMediator mediatR
+@inject DialogService DialogService
+@implements IDisposable
+
+<RadzenContentContainer>
+    <RadzenTemplateForm TItem="CustomersModel" Data="Model" Submit="OnSubmit">
+        <RadzenRadioButtonList Orientation="Orientation.Horizontal" TValue="int" @bind-Value=@Model.Customers.CustomerTypeID class="rz-w-100 rz-mb-2">
+            <Items>
+                <RadzenRadioButtonListItem TValue="int" Value="1" Text="Business" />
+                <RadzenRadioButtonListItem TValue="int" Value="2" Text="Individual" />
+            </Items>
+        </RadzenRadioButtonList>
+        <RadzenFormField Text="Customer Code" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextBox Name="CustomerCode" @bind-Value=Model.Customers.CustomerCode Placeholder="Customer Code">
+
+                </RadzenTextBox>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="CustomerCode" Popup="true" Text="Customer code is required." Style="display:block;z-index:101;" />
+            </Helper>
+        </RadzenFormField>
+        <RadzenFormField Text="Customer Name" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextBox Name="CustomerName" @bind-Value=Model.Customers.CustomerName Placeholder="Customer Name">
+
+                </RadzenTextBox>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="CustomerName" Popup="true" Text="Customer name is required." Style="display:block;z-index:101;" />
+            </Helper>
+        </RadzenFormField>
+
+
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="CR No" class="rz-w-50">
+                <RadzenTextBox Name="CR_Number" @bind-Value=Model.Customers.CR_Number Placeholder="CR No" />
+            </RadzenFormField>
+            <RadzenFormField Text="VAT No" class="rz-w-50">
+                <RadzenTextBox Name="VAT_Number" @bind-Value=Model.Customers.VAT_Number Placeholder="VAT No" />
+            </RadzenFormField>
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="Phone" class="rz-w-50">
+                <RadzenTextBox Name="Phone" @bind-Value=Model.Customers.Phone Placeholder="Phone" />
+            </RadzenFormField>
+            <RadzenFormField Text="Fax" class="rz-w-50">
+                <RadzenTextBox Name="Fax" @bind-Value=Model.Customers.VAT_Number Placeholder="Fax" />
+            </RadzenFormField>
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="Mobile" class="rz-w-50">
+                <RadzenTextBox Name="Mobile" @bind-Value=Model.Customers.Mobile Placeholder="Mobile" />
+            </RadzenFormField>
+            <RadzenFormField Text="Email" class="rz-w-50">
+                <RadzenTextBox Name="Email" @bind-Value=Model.Customers.Email Placeholder="Email" />
+            </RadzenFormField>
+        </RadzenStack>
+
+        <RadzenFormField Text="Billing Address 1" class="rz-w-100 rz-mt-2">
+            <RadzenTextBox Name="BillingAddressLine1" @bind-Value=Model.CustomersAddress.BillingAddressLine1 Placeholder="Address Line1" />
+        </RadzenFormField>
+
+        <RadzenFormField Text="Billing Address 2" class="rz-w-100">
+            <RadzenTextBox Name="BillingAddressLine2" @bind-Value=Model.CustomersAddress.BillingAddressLine2 Placeholder="Address Line2" />
+        </RadzenFormField>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="Billing Country" class="rz-w-50">
+                <RadzenDropDown @ref=rddBillingCountry Data=billingCountryList Name="BillingCountryID" TValue="int?" ValueProperty="CountryID" TextProperty="CountryName" @bind-Value="Model.CustomersAddress.BillingCountryID" Change="@((args)=> OnChangeBillingCountry((args is not null ? (int)args:-1)))">
+
+                </RadzenDropDown>
+            </RadzenFormField>
+            <RadzenFormField Text="Billing State" class="rz-w-50">
+                <RadzenDropDown @ref=rddBillingProvince Data=billingProvinceList Name="BillingProvinceID" TValue="int?" ValueProperty="ProvinceID" TextProperty="ProvinceName" @bind-Value="Model.CustomersAddress.BillingProvinceID">
+
+                </RadzenDropDown>
+            </RadzenFormField>
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="Billing Zip Code" class="rz-w-50">
+                <RadzenTextBox Name="BillingZipCode" @bind-Value=Model.CustomersAddress.BillingZipCode Placeholder="Zip Code" />
+            </RadzenFormField>
+            <RadzenFormField Text="Billing City" class="rz-w-50">
+                <RadzenTextBox Name="BillingCityName" @bind-Value=Model.CustomersAddress.BillingCityName Placeholder="City" />
+            </RadzenFormField>
+        </RadzenStack>
+
+
+
+        <RadzenFormField Text="Shipping Address 1" class="rz-w-100  rz-mt-2">
+            <RadzenTextBox Name="ShippingAddressLine1" @bind-Value=Model.CustomersAddress.ShippingAddressLine1 Placeholder="Address Line1" />
+        </RadzenFormField>
+
+
+        <RadzenFormField Text="Shipping Address 2" class="rz-w-100">
+            <RadzenTextBox Name="ShippingAddressLine2" @bind-Value=Model.CustomersAddress.ShippingAddressLine2 Placeholder="Address Line2" />
+        </RadzenFormField>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="Shipping Country" class="rz-w-50">
+                <RadzenDropDown @ref=rddShippingCountry Data=shippingCountryList Name="ShippingCountryID" TValue="int?" ValueProperty="CountryID" TextProperty="CountryName" @bind-Value="Model.CustomersAddress.ShippingCountryID" Change="@((args)=> OnChangeShippingCountry((args is not null ? (int)args:-1)))">
+
+                </RadzenDropDown>
+            </RadzenFormField>
+            <RadzenFormField Text="Shipping State" class="rz-w-50">
+                <RadzenDropDown @ref=rddShippingProvince Data=shippingProvinceList Name="ShippingProvinceID" TValue="int?" ValueProperty="ProvinceID" TextProperty="ProvinceName" @bind-Value="Model.CustomersAddress.ShippingProvinceID">
+
+                </RadzenDropDown>
+            </RadzenFormField>
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="Shipping Zip Code" class="rz-w-50">
+                <RadzenTextBox Name="ShippingipCode" @bind-Value=Model.CustomersAddress.ShippingZipCode Placeholder="Zip Code" />
+            </RadzenFormField>
+            <RadzenFormField Text="Shipping City" class="rz-w-50">
+                <RadzenTextBox Name="ShippingCityName" @bind-Value=Model.CustomersAddress.ShippingCityName Placeholder="City" />
+            </RadzenFormField>
+        </RadzenStack>
+
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center" Gap="0.20rem" class="rz-mt-2">
+            <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Shade="Shade.Lighter" Text="@(id.HasValue? "Update":"Create")" BusyText="@(id.HasValue? "Update...":"Create...")" IsBusy="IsBusy" Disabled="IsBusy">
+
+            </RadzenButton>
+            <RadzenButton ButtonType="ButtonType.Button" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Shade="Shade.Lighter" Text="Cancel" Disabled="IsBusy" Click="@(()=>DialogService.CloseSide(null))">
+
+            </RadzenButton>
+
+        </RadzenStack>
+
+    </RadzenTemplateForm>
+
+
+
+</RadzenContentContainer>
+
+
+@code {
+
+    [Parameter]
+    public int? id { get; set; }
+
+    bool IsBusy;
+    bool rendered;
+
+    private CustomersModel Model = new CustomersModel();
+    private IEnumerable<vw_AccountDetail> saleAccountList = new List<vw_AccountDetail>();
+    private IEnumerable<vw_AccountDetail> purchaseAccountList = new List<vw_AccountDetail>();
+    private IEnumerable<vw_AccountDetail> cgsAccountList = new List<vw_AccountDetail>();
+    private IEnumerable<Country> billingCountryList = new List<Country>();
+    private IEnumerable<Province> billingProvinceList = new List<Province>();
+    private IEnumerable<Country> shippingCountryList = new List<Country>();
+    private IEnumerable<Province> shippingProvinceList = new List<Province>();
+
+    IEnumerable<int> itemTypeIDs = new int[]{1};
+    RadzenDropDown<int> rddCustomerGroup;
+    RadzenDropDown<int> rddCustomerUnit;
+    RadzenDropDown<int?>? rddInwardTax;
+    RadzenDropDown<int?>? rddOutwardTax;
+
+    RadzenDropDown<int?>? rddPurchaseAccount;
+    RadzenDropDown<int?>? rddSaleAccount;
+    RadzenDropDown<int?>? rddCGSAccount;
+
+    RadzenDropDown<int?>? rddBillingCountry;
+    RadzenDropDown<int?>? rddBillingProvince;
+
+    RadzenDropDown<int?>? rddShippingCountry;
+    RadzenDropDown<int?>? rddShippingProvince;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        Model.Customers = new Customers();
+        Model.CustomersAddress = new CustomersAddress();
+
+        Model.Customers.CustomerTypeID = 1;
+        Model.Customers.CompanyID = 1;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (id.HasValue)
+            {
+
+                var result = await mediatR.Send(new GetCustomers { Id = id.Value });
+                if (result is not null)
+                {
+                    Model.Customers = result;
+
+
+                }
+
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+
+
+            await FillGridDropdown("BillingCountry");
+            await FillGridDropdown("ShippingCountry");
+
+            if (id.HasValue)
+            {
+                if (Model.Customers is not null)
+                {
+                    var customerAdd = await (await mediatR.Send(new ReadCustomersAddress { filter = x => (x.CustomerID == Model.Customers.CustomerID) })).FirstOrDefaultAsync();
+
+                    if (customerAdd is not null)
+                    {
+                        Model.CustomersAddress = customerAdd;
+                    }
+
+                    if (Model.CustomersAddress is not null)
+                    {
+                        if (Model.CustomersAddress.BillingCountryID.HasValue)
+                        {
+                            await OnChangeBillingCountry(Model.CustomersAddress.BillingCountryID.Value);
+                        }
+
+                        if (Model.CustomersAddress.ShippingCountryID.HasValue)
+                        {
+                            await OnChangeShippingCountry(Model.CustomersAddress.ShippingCountryID.Value);
+                        }
+                    }
+                }
+            }
+
+            rendered = true;
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+    }
+
+    public async Task FillGridDropdown(string key)
+    {
+
+
+        switch (key)
+        {
+            case "BillingCountry":
+                billingCountryList = await (await this.mediatR.Send(new ReadCountry { orderBy = o => o.OrderBy(x => x.CountryID) })).ToListAsync();
+                break;
+            case "ShippingCountry":
+                shippingCountryList = await (await this.mediatR.Send(new ReadCountry { orderBy = o => o.OrderBy(x => x.CountryID) })).ToListAsync();
+                break;
+        }
+
+
+    }
+
+    private async Task OnChangeBillingCountry(int id)
+    {
+        try
+        {
+            billingProvinceList = await (await this.mediatR.Send(new ReadProvince { filter = x => x.CountryID == id, orderBy = o => o.OrderBy(x => x.ProvinceName) })).ToListAsync();
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+    private async Task OnChangeShippingCountry(int id)
+    {
+        try
+        {
+            shippingProvinceList = await (await this.mediatR.Send(new ReadProvince { filter = x => x.CountryID == id, orderBy = o => o.OrderBy(x => x.ProvinceName) })).ToListAsync();
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+
+    private async Task OnSubmit()
+    {
+        IsBusy = true;
+        GenericResult<Customers> Result = new GenericResult<Customers>();
+
+        try
+        {
+            await Task.Yield();
+
+
+
+            if (id.HasValue)
+            {
+                Model.Customers.UpdatedDateAt = DateTime.UtcNow;
+                Model.Customers.UpdatedUserID = 1;
+                Result = await this.mediatR.Send(new UpdateCustomersCommand { model = Model });
+            }
+            else
+            {
+                Model.Customers.CreatedDateAt = DateTime.UtcNow;
+                Model.Customers.CreatedUserID = 1;
+                Result = await this.mediatR.Send(new CreateCustomersCommand { model = Model });
+            }
+
+
+
+            if (Result.Status)
+            {
+
+                if (Result.Data is not null)
+                {
+
+
+                    IsBusy = false;
+
+                    DialogService.CloseSide(Model);
+
+                }
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+    public void Dispose()
+    {
+        DialogService.Dispose();
+    }
+
+}

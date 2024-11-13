@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "/L0lGjtHKpg=",
+  "success": true,
+  "projectFilePath": "D:\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.10\\microsoft.entityframeworkcore.abstractions.8.0.10.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.100\\microsoft.net.sdk.compilers.toolset.9.0.100.nupkg.sha512"
+  ],
+  "logs": []
+}

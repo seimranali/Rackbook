@@ -1,0 +1,283 @@
+﻿@using Rackbook.Application.ManageNavigationItem
+@using Rackbook.Application.ManageNavigationItem.Queries
+@using Rackbook.WebUI.Services
+@using System.Security.Claims
+@using Rackbook.Domain.Entities
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using System.Text
+@inherits LayoutComponentBase
+@inject IHostEnvironment HostEnvironment
+@inject IMediator mediatR
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+<RadzenComponents @rendermode="InteractiveServer" />
+
+<RadzenLayout Style="@(!RTL ? "position:relative;grid-template-areas: 'rz-header rz-header' 'rz-sidebar rz-body'":"grid-template-columns: 1fr auto;grid-template-areas: 'rz-header rz-header' 'rz-body rz-sidebar'")">
+    <RadzenHeader>
+        <RadzenRow Gap="1rem">
+            <RadzenColumn Size="@(!RTL ? 4:8)">
+                @if (!RTL)
+                {
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="@(!RTL ? JustifyContent.Start: JustifyContent.End)" AlignItems="AlignItems.Center" Gap="0.25rem">
+                        <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" class="rz-m-0" />
+
+                        <RadzenIcon Icon="style" IconStyle="IconStyle.Warning" Style="font-size:24pt">
+
+                        </RadzenIcon>
+
+                        <RadzenLabel Text="App" Style="font-size:18pt;">
+
+                        </RadzenLabel>
+
+                    </RadzenStack>
+                }
+                else
+                {
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="@(!RTL ? JustifyContent.End: JustifyContent.Start)" AlignItems="AlignItems.Center" Gap="0.25rem">
+
+                        <RadzenProfileMenu>
+                            <Template>
+                                <RadzenLabel>@UserSession.FullName</RadzenLabel>
+                            </Template>
+                            <ChildContent>
+                                <RadzenProfileMenuItem Text="Profile" Icon="account_circle" />
+                                <RadzenProfileMenuItem Text="Sign Out" Icon="logout" Path="/Users/logout" />
+                            </ChildContent>
+
+                        </RadzenProfileMenu>
+
+                    </RadzenStack>
+                }
+            </RadzenColumn>
+            <RadzenColumn Size="@(!RTL ? 8:4)">
+                @if (RTL)
+                {
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="@(!RTL ? JustifyContent.Start: JustifyContent.End)" AlignItems="AlignItems.Center" Gap="0.25rem">
+
+                        <RadzenLabel Text="App" Style="font-size:18pt;">
+
+                        </RadzenLabel>
+                        <RadzenIcon Icon="style" IconStyle="IconStyle.Warning" Style="font-size:24pt">
+
+                        </RadzenIcon>
+
+                        <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" class="rz-m-0" />
+
+                    </RadzenStack>
+                }
+                else
+                {
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="@(!RTL ? JustifyContent.End: JustifyContent.Start)" AlignItems="AlignItems.Center" Gap="0.25rem">
+                        <RadzenProfileMenu>
+                            <Template>
+                                <RadzenLabel>@UserSession.FullName</RadzenLabel>
+                            </Template>
+                            <ChildContent>
+                                <RadzenProfileMenuItem Text="Profile" Icon="account_circle" />
+                                <RadzenProfileMenuItem Text="Sign Out" Icon="logout" Path="/Users/logout" />
+                            </ChildContent>
+
+                        </RadzenProfileMenu>
+                    </RadzenStack>
+
+                }
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenHeader>
+    <RadzenSidebar @bind-Expanded="sidebarExpanded" Style="bottom:0 !important;" dir="@(!RTL ? "ltr":"rtl")" Responsive="true">
+
+        <div style="padding: 1rem">
+            <RadzenTextBox id="find" Placeholder="Find component ..." type="search" @oninput="@FilterPanelMenu" style="width: 100%" Class="rz-search-input" aria-label="find" />
+        </div>
+        <div style="flex: 1; overflow: auto">
+            <RadzenPanelMenu Match="NavLinkMatch.Prefix" Multiple="false">
+                @if (navItems is not null)
+                {
+                    @foreach (var mainNavItem in navItems)
+                    {
+                        <NavigationMenu @key=mainNavItem NavigationItem=@mainNavItem>
+                            @if (mainNavItem.Children != null)
+                            {
+                                @foreach (var subNavItem in mainNavItem.Children)
+                                {
+                                    if (subNavItem.Children != null)
+                                    {
+                                        <NavigationMenu @key=subNavItem NavigationItem=@subNavItem>
+                                            @foreach (var child in subNavItem.Children)
+                                            {
+                                                <NavigationMenu @key=child NavigationItem=@child />
+                                            }
+                                        </NavigationMenu>
+                                    }
+                                    else
+                                    {
+                                        <NavigationMenu @key=subNavItem NavigationItem=@subNavItem />
+                                    }
+                                }
+                            }
+                        </NavigationMenu>
+                    }
+                }
+            </RadzenPanelMenu>
+        </div>
+
+    </RadzenSidebar>
+    <RadzenBody>
+        <main dir="@(!RTL ? "ltr":"rtl")">
+            <article class="rz-w-100 main-heading"></article>
+            <article class="rz-p-4">
+                <CascadingValue @ref=cascadingValue Name="UserSession" TValue="UserSession" Value=UserSession>
+                    <ErrorBoundary @ref="errorBoundary">
+                        @Body
+                    </ErrorBoundary>
+                </CascadingValue>
+            </article>
+        </main>
+    </RadzenBody>
+</RadzenLayout>
+
+
+
+<div id="reconnect-modal" style="display: none;"></div>
+<div id="blazor-error-ui" data-nosnippet>
+    @if (HostEnvironment.IsProduction())
+    {
+        <span>An error has occurred.</span>
+    }
+    else
+    {
+        <span>An unhandled exception occurred.</span>
+    }
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+
+
+@code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState>? authenticationState { get; set; }
+
+    bool sidebarExpanded;
+    bool RTL = false;
+    bool rendered;
+
+    private ErrorBoundary? errorBoundary;
+    private UserSession UserSession = new UserSession();
+    CascadingValue<UserSession>? cascadingValue;
+    IEnumerable<NavigationItem> navItems;
+    NavigationItemService NavigationItemService = new NavigationItemService();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        errorBoundary?.Recover();
+        await Task.CompletedTask;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        try
+        {
+
+            if (firstRender)
+            {
+
+                await LoadAuthenticationUser();
+                var Result = await ProtectedLocalStore.GetAsync<string>("Rackbook_Navigation");
+                if (!Result.Success)
+                {
+                    NavigationItemService.NavigationItems = await this.mediatR.Send(new ReadAllNavigationItem
+                        {
+                            filter = x => x.CompanyID == 1 &&
+                            (x.ParentNavigationItemID == null ||
+                                x.ParentNavigationItemID == 0)
+                        });
+                    navItems = NavigationItemService.NavigationItems;
+
+                    string navs = JsonSerializer.Serialize(navItems,  new JsonSerializerOptions
+                        {
+                            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                            WriteIndented = true
+                        });
+                    await ProtectedLocalStore.SetAsync("Rackbook_Navigation", navs);
+                }
+                else
+                {
+                    if (Result.Value is not null)
+                    {
+                        byte[] _navsData = Encoding.UTF8.GetBytes(Result.Value);
+                        var navs =  JsonSerializer.Deserialize<IEnumerable<NavigationItem>>(_navsData,  new JsonSerializerOptions
+                            {
+                                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                                WriteIndented = true
+                            });
+
+                        if (navs is not null)
+                            navItems = navs;
+                    }
+                }
+
+                rendered = true;
+                await InvokeAsync(StateHasChanged);
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+    void FilterPanelMenu(ChangeEventArgs args)
+    {
+        var term = args.Value.ToString();
+
+        navItems = string.IsNullOrEmpty(term) ? NavigationItemService.NavigationItems : NavigationItemService.Filter(term);
+    }
+
+    private async Task LoadAuthenticationUser()
+    {
+        try
+        {
+
+            if (authenticationState is not null)
+            {
+                var claimsPrincipal = (await authenticationState).User;
+                if (claimsPrincipal is not null)
+                {
+                    if (claimsPrincipal?.Identity is not null)
+                    {
+                        if (claimsPrincipal.Identity.IsAuthenticated)
+                        {
+
+                            List<Claim> claims = claimsPrincipal.Claims.ToList();
+                            UserSession = new UserSession
+                                {
+                                    UserID = Convert.ToInt32(claims[(int)EnumUserLogin.UserID].Value),
+                                    CompanyID = Convert.ToInt32(claims[(int)EnumUserLogin.CompanyID].Value),
+                                    UserName = claims[(int)EnumUserLogin.Username].Value,
+                                    FullName = claims[(int)EnumUserLogin.FullName].Value,
+                                    Mobile = claims[(int)EnumUserLogin.Mobile].Value,
+                                    Email = claims[(int)EnumUserLogin.Email].Value,
+                                    UserRoleName = claims[(int)EnumUserLogin.RoleName].Value,
+                                };
+
+
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+}

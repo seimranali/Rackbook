@@ -1,0 +1,5 @@
+wwwroot\app.css
+wwwroot\Images\background_image_overlay.jpg
+wwwroot\Images\background_image_overlay.png
+wwwroot\js\boot.js
+wwwroot\notfound.html

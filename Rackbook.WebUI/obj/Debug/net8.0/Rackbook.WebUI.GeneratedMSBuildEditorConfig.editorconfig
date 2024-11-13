@@ -1,0 +1,141 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Rackbook.WebUI
+build_property.RootNamespace = Rackbook.WebUI
+build_property.ProjectDir = D:\Rackbook\Rackbook.WebUI\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Rackbook\Rackbook.WebUI
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Layout/BaseLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQmFzZUxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Layout/NavigationMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2aWdhdGlvbk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Layout/PublicLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcUHVibGljTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/LoadingIndicator.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMb2FkaW5nSW5kaWNhdG9yLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/AccountsDetailPages/AccountsDetailPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50c0RldGFpbFBhZ2VzXEFjY291bnRzRGV0YWlsUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/AccountsDetailPages/_AccountsDetailPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50c0RldGFpbFBhZ2VzXF9BY2NvdW50c0RldGFpbFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/CustomersPages/CustomersPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDdXN0b21lcnNQYWdlc1xDdXN0b21lcnNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/CustomersPages/_CustomersPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDdXN0b21lcnNQYWdlc1xfQ3VzdG9tZXJzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/ItemGroupPages/ItemGroupPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtR3JvdXBQYWdlc1xJdGVtR3JvdXBQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/ItemGroupPages/_ItemGroupPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtR3JvdXBQYWdlc1xfSXRlbUdyb3VwUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/ItemsPages/ItemsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtc1BhZ2VzXEl0ZW1zUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/ItemsPages/_ItemsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtc1BhZ2VzXF9JdGVtc1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/ItemUnitPages/ItemUnitPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtVW5pdFBhZ2VzXEl0ZW1Vbml0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/ItemUnitPages/_ItemUnitPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJdGVtVW5pdFBhZ2VzXF9JdGVtVW5pdFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/JournalEntryTypePages/JournalEntryTypePage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xKb3VybmFsRW50cnlUeXBlUGFnZXNcSm91cm5hbEVudHJ5VHlwZVBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/JournalEntryTypePages/_JournalEntryTypePage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xKb3VybmFsRW50cnlUeXBlUGFnZXNcX0pvdXJuYWxFbnRyeVR5cGVQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/MainAccountsPages/MainAccountsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYWluQWNjb3VudHNQYWdlc1xNYWluQWNjb3VudHNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/MainAccountsPages/_MainAccountsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYWluQWNjb3VudHNQYWdlc1xfTWFpbkFjY291bnRzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/NotFoundPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xOb3RGb3VuZFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/Public/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/Public/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcX0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/UserRolePages/UserRolePage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyUm9sZVBhZ2VzXFVzZXJSb2xlUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Pages/UserRolePages/_UserRolePage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyUm9sZVBhZ2VzXF9Vc2VyUm9sZVBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/ProcessError.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQcm9jZXNzRXJyb3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Rackbook/Rackbook.WebUI/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-llf9tmkemu

@@ -1,0 +1,68 @@
+﻿@using Radzen
+@using Radzen.Blazor
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="Rackbook.WebUI.styles.css" />
+    <HeadOutlet @rendermode="InteractiveServer" />
+    <RadzenTheme Theme="material" @rendermode="InteractiveServer" />
+    <style>
+
+       :root {
+
+            --rz-layout-body-padding:0 !important;
+            --rz-body-font-size:0.90rem !important;
+            --rz-body-line-height:0.75rem !important;
+            --rz-grid-cell-padding: 0.225rem 0.50rem !important;
+            --rz-input-padding-block: 0.5375rem !important;
+            --rz-input-padding-inline:0.6375rem !important;
+       }
+       .rz-body {
+            padding: var(--rz-layout-body-padding) !important;
+       }
+
+       .main-heading {
+            display: block;
+            top:0;
+            right:0;
+            left:0;
+            height: 200px;
+            position: absolute;
+            z-index: -1;
+            background: linear-gradient(150deg, #ecedee, transparent 30%),
+            linear-gradient(330deg, rgb(210, 206, 242),
+            transparent 30%), 
+            linear-gradient(225deg, #fff0be, #fbdce7, #e2fae1, powderblue);
+            background-blend-mode:screen;
+       }
+
+        :root:has(.rz-layout) body{
+            font-size: var(--rz-body-font-size) !important;
+            line-height: var(--rz-body-line-height) !important;
+        }
+
+        .rz-grid-table td, .rz-grid-table th {
+            padding: var(--rz-grid-cell-padding) !important;
+        }
+
+        .rz-colorpicker, .rz-lookup-search input, .rz-numeric, .rz-datepicker > .rz-inputtext, .rz-multiselect, .rz-dropdown, .mask, .rz-textarea, .rz-textbox {
+            padding-block: var(--rz-input-padding-block);
+            padding-inline: var(--rz-input-padding-inline);
+        }
+
+    </style>
+</head>
+
+<body>
+    <Routes @rendermode="new InteractiveServerRenderMode(prerender:false)" />
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
+    <script src="_framework/blazor.web.js" autostart="false"></script>
+    <script src="/js/boot.js"></script>
+</body>
+
+</html>

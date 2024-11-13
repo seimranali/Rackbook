@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+<CascadingAuthenticationState>
+<ProcessError>
+    <Router AppAssembly="typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+            <FocusOnNavigate RouteData="routeData" Selector="h1" />
+           
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@(typeof(Layout.MainLayout))">
+                <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter" Title="Info" Text="Sorry, there's nothing at this address." AllowClose="false">
+
+                </RadzenAlert>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</ProcessError>
+</CascadingAuthenticationState>

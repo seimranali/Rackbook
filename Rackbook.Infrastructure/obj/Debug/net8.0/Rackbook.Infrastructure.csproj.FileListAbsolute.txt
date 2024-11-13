@@ -1,0 +1,16 @@
+D:\Rackbook\Rackbook.Infrastructure\bin\Debug\net8.0\Rackbook.Infrastructure.deps.json
+D:\Rackbook\Rackbook.Infrastructure\bin\Debug\net8.0\Rackbook.Infrastructure.dll
+D:\Rackbook\Rackbook.Infrastructure\bin\Debug\net8.0\Rackbook.Infrastructure.pdb
+D:\Rackbook\Rackbook.Infrastructure\bin\Debug\net8.0\Rackbook.Domain.dll
+D:\Rackbook\Rackbook.Infrastructure\bin\Debug\net8.0\Rackbook.Domain.pdb
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.Infrastructure.csproj.AssemblyReference.cache
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.Infrastructure.AssemblyInfoInputs.cache
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.Infrastructure.AssemblyInfo.cs
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.B12BB6ED.Up2Date
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.Infrastructure.dll
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\refint\Rackbook.Infrastructure.dll
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.Infrastructure.pdb
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\ref\Rackbook.Infrastructure.dll
+D:\Rackbook\Rackbook.Infrastructure\obj\Debug\net8.0\Rackbook.Infrastructure.sourcelink.json

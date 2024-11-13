@@ -1,0 +1,213 @@
+﻿@using Rackbook.Application
+@using Rackbook.Application.ManageAccountType.Queries
+@using Rackbook.Application.ManageAccountDetail
+@using Rackbook.Application.ManageAccountDetail.Queries
+@inject IMediator mediatR
+@inject DialogService DialogService
+<RadzenContentContainer>
+    <RadzenTemplateForm TItem="AccountDetail" Data="Model" Submit="OnSubmit">
+
+
+        <RadzenFormField Text="Account Type" class="rz-w-100">
+            <ChildContent>
+                <RadzenDropDown @ref=rddAccountType Data=AccountTypeList @bind-Value=Model.AccountTypeID TValue="int" Name="AccountTypeID" ValueProperty="AccountTypeID" TextProperty="AccountTypeName" FilterDelay="300" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive">
+
+                </RadzenDropDown>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="AccountTypeID" Text="Account type is required." Popup="true" Style="display:block;z-index:100;" DefaultValue="0"></RadzenRequiredValidator>
+            </Helper>
+        </RadzenFormField>
+
+        <RadzenFormField Text="Account No" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextBox Name="AccountNumber" @bind-Value=Model.AccountNumber Placeholder="Account No">
+
+                </RadzenTextBox>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="AccountNumber" Popup="true" Text="Account no is required." Style="display:block;z-index:1000;" />
+            </Helper>
+        </RadzenFormField>
+
+
+        <RadzenFormField Text="Account Name" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextBox Name="AccountName" @bind-Value=Model.AccountName Placeholder="Account Name">
+
+                </RadzenTextBox>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="AccountName" Popup="true" Text="Account name is required." Style="display:block;z-index:1000;" />
+            </Helper>
+        </RadzenFormField>
+
+        <RadzenFormField Text="Account Description" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextArea Name="AccountDescription" @bind-Value=Model.AccountDescription Cols="68" Rows="2" Placeholder="Account Description">
+
+                </RadzenTextArea>
+            </ChildContent>
+        </RadzenFormField>
+
+        <RadzenRadioButtonList Orientation="Orientation.Vertical" @bind-Value=Model.AccountStatementTypeID TValue="int">
+            <Items>
+                <RadzenRadioButtonListItem Value="1" Text="Balane Sheet Statement" />
+                <RadzenRadioButtonListItem Value="2" Text="Income Statement" />
+            </Items>
+        </RadzenRadioButtonList>
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem">
+
+
+            <RadzenCheckBox Name="IsActive" @bind-Value="Model.IsActive">
+
+            </RadzenCheckBox>
+            <RadzenText Text="Active">
+
+            </RadzenText>
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center" Gap="0.20rem" class="rz-mt-2">
+            <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Shade="Shade.Lighter" Text="@(id.HasValue? "Update":"Create")" BusyText="@(id.HasValue? "Update...":"Create...")" IsBusy="IsBusy" Disabled="IsBusy">
+
+            </RadzenButton>
+            <RadzenButton ButtonType="ButtonType.Button" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Shade="Shade.Lighter" Text="Cancel" Disabled="IsBusy" Click="@(()=>DialogService.CloseSide(null))">
+
+            </RadzenButton>
+
+        </RadzenStack>
+
+    </RadzenTemplateForm>
+
+
+
+</RadzenContentContainer>
+
+
+@code {
+
+    [Parameter]
+    public int? id { get; set; }
+
+    bool IsBusy;
+    bool rendered;
+
+    AccountDetail Model = new AccountDetail();
+    GenericResult<AccountDetail> Result;
+
+    IEnumerable<AccountType> AccountTypeList = new List<AccountType>();
+    RadzenDropDown<int> rddAccountType;
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (id.HasValue)
+            {
+
+                var result = await mediatR.Send(new GetAccountDetail { Id = id.Value });
+                if (result is not null)
+                {
+                    Model = result;
+                    
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Model.AccountStatementTypeID = 1;
+            Model.IsActive = true;
+            await FillDropdown("AccountType");
+
+            rendered = true;
+            
+        }
+    }
+
+
+    async Task FillDropdown(string key)
+    {
+        try
+        {
+
+            switch (key)
+            {
+                case "AccountType":
+                    AccountTypeList = await (await mediatR.Send(new ReadAccountType { })).ToListAsync();
+                    break;
+            }
+
+
+            
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+    async Task OnSubmit()
+    {
+        Result = new GenericResult<AccountDetail>();
+        try
+        {
+            await Task.Yield();
+
+            Model.CompanyID = 1;
+
+            if (!id.HasValue)
+            {
+                Model.CreatedUserID = 1;
+                Model.CreatedDateAt = DateTime.UtcNow;
+                Result = await this.mediatR.Send(new CreateAccountDetailCommand() { model = Model });
+            }
+            else
+            {
+                Model.UpdatedUserID = 1;
+                Model.UpdatedDateAt = DateTime.UtcNow;
+                Result = await this.mediatR.Send(new UpdateAccountDetailCommand() { model = Model });
+            }
+
+
+            if (Result is not null)
+            {
+                if (Result.Status)
+                {
+                    if (Result.Data is not null)
+                    {
+
+                        
+                        await Task.Delay(500);
+                        DialogService.CloseSide(Model);
+                    }
+                }
+                else
+                {
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+}

@@ -1,0 +1,151 @@
+﻿@using Rackbook.Application
+@using Rackbook.Application.ManageJournalEntryType
+@using Rackbook.Application.ManageJournalEntryType.Queries
+@inject IMediator mediatR
+@inject DialogService DialogService
+<RadzenContentContainer>
+    <RadzenTemplateForm TItem="JournalEntryType" Data="Model" Submit="OnSubmit">
+
+        <RadzenFormField Text="Journal Entry Type Name" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextBox Name="JournalEntryTypeName" @bind-Value=Model.JournalEntryTypeName Placeholder="Journal Entry Type Name">
+
+                </RadzenTextBox>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="JournalEntryTypeName" Popup="true" Text="Journal entry type name is required." Style="display:block;z-index:1000;" />
+            </Helper>
+        </RadzenFormField>
+
+        <RadzenFormField Text="Journal Entry Type Description" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextArea Name="JournalEntryTypeDescription" @bind-Value=Model.JournalEntryTypeDescription Cols="68" Rows="2" Placeholder="Journal Entry Type Description">
+
+                </RadzenTextArea>
+            </ChildContent>
+        </RadzenFormField>
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem">
+            <RadzenFormField Text="Sort Order" class="w-25">
+                <ChildContent>
+                    <RadzenNumeric Min="0" Step="1" Name="SortOrder" @bind-Value=Model.SortOrder>
+
+                    </RadzenNumeric>
+                </ChildContent>
+            </RadzenFormField>
+
+            <RadzenCheckBox Name="IsActive" @bind-Value="Model.IsActive">
+
+            </RadzenCheckBox>
+            <RadzenText Text="Active">
+
+            </RadzenText>
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center" Gap="0.20rem" class="rz-mt-2">
+            <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Shade="Shade.Lighter" Text="@(id.HasValue? "Update":"Create")" BusyText="@(id.HasValue? "Update...":"Create...")" IsBusy="IsBusy" Disabled="IsBusy">
+
+            </RadzenButton>
+            <RadzenButton ButtonType="ButtonType.Button" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Shade="Shade.Lighter" Text="Cancel" Disabled="IsBusy" Click="@(()=>DialogService.CloseSide(null))">
+
+            </RadzenButton>
+
+        </RadzenStack>
+
+    </RadzenTemplateForm>
+
+
+
+</RadzenContentContainer>
+
+
+@code {
+
+    [Parameter]
+    public int? id { get; set; }
+
+    bool IsBusy;
+    bool rendered;
+
+    JournalEntryType Model = new JournalEntryType();
+    GenericResult<JournalEntryType> Result;
+
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (id.HasValue)
+            {
+
+                var result = await mediatR.Send(new GetJournalEntryType { Id = id.Value });
+                if (result is not null)
+                {
+                    Model = result;
+                    
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            rendered = true;
+            
+        }
+    }
+
+
+    async Task OnSubmit()
+    {
+        Result = new GenericResult<JournalEntryType>();
+        try
+        {
+            await Task.Yield();
+
+            Model.CompanyID = 1;
+
+            if (!id.HasValue)
+                Result = await this.mediatR.Send(new CreateJournalEntryTypeCommand() { model = Model });
+            else
+                Result = await this.mediatR.Send(new UpdateJournalEntryTypeCommand() { model = Model });
+
+
+
+            if (Result is not null)
+            {
+                if (Result.Status)
+                {
+                    if (Result.Data is not null)
+                    {
+
+                        
+                        await Task.Delay(500);
+                        DialogService.CloseSide(Model);
+                    }
+                }
+                else
+                {
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+}

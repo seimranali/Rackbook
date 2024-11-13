@@ -1,0 +1,400 @@
+﻿@using Rackbook.Application
+@using Rackbook.Application.ManageAccountDetail.Queries
+@using Rackbook.Application.ManageItemGroup.Queries
+@using Rackbook.Application.ManageItemUnit.Queries
+@using Rackbook.Application.ManageItems
+@using Rackbook.Application.ManageItems.Queries
+@inject IMediator mediatR
+@inject DialogService DialogService
+@implements IDisposable
+
+<RadzenContentContainer>
+    <RadzenTemplateForm TItem="Items" Data="Model" Submit="OnSubmit">
+        <RadzenRadioButtonList Orientation="Orientation.Horizontal" TValue="int" @bind-Value=@Model.ItemTypeID class="rz-w-100">
+            <Items>
+                <RadzenRadioButtonListItem TValue="int" Value="1" Text="Goods" />
+                <RadzenRadioButtonListItem TValue="int" Value="2" Text="Services" />
+            </Items>
+        </RadzenRadioButtonList>
+        <RadzenFormField Text="Item Group" class="rz-w-100">
+            <ChildContent>
+                <RadzenDropDown @ref=rddItemGroup Data=ItemGroupList @bind-Value=Model.ItemGroupID TValue="int" Name="ItemGroupID" ValueProperty="ItemGroupID" TextProperty="ItemGroupName" FilterDelay="300" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive">
+
+                </RadzenDropDown>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="ItemGroupID" Text="Item group is required." Popup="true" Style="display:block;z-index:100;" DefaultValue="0"></RadzenRequiredValidator>
+            </Helper>
+        </RadzenFormField>
+        <RadzenFormField Text="Item Code" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextBox Name="ItemCode" @bind-Value=Model.ItemCode Placeholder="Item Code">
+
+                </RadzenTextBox>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="ItemCode" Popup="true" Text="Item code is required." Style="display:block;z-index:101;" />
+            </Helper>
+        </RadzenFormField>
+        <RadzenFormField Text="Item Name" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextBox Name="ItemName" @bind-Value=Model.ItemName Placeholder="Item Name">
+
+                </RadzenTextBox>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="ItemName" Popup="true" Text="Item name is required." Style="display:block;z-index:101;" />
+            </Helper>
+        </RadzenFormField>
+
+        <RadzenFormField Text="Item Description" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextArea Name="ItemsDescription" @bind-Value=Model.ItemDescription Cols="68" Rows="4" Placeholder="Item Description">
+
+                </RadzenTextArea>
+            </ChildContent>
+        </RadzenFormField>
+
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="UPC" class="rz-w-auto">
+                <RadzenTextBox Name="UPC" @bind-Value=Model.UPC Placeholder="UPC" />
+            </RadzenFormField>
+            <RadzenFormField Text="EAN" class="rz-w-auto">
+                <RadzenTextBox Name="EAN" @bind-Value=Model.EAN Placeholder="EAN" />
+            </RadzenFormField>
+            <RadzenFormField Text="Color" class="rz-w-auto">
+                <RadzenTextBox Name="Color" @bind-Value=Model.Color Placeholder="Color" />
+            </RadzenFormField>
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="Item Unit" class="rz-w-auto">
+                <ChildContent>
+                    <RadzenDropDown @ref=rddItemUnit Data=ItemUnitList @bind-Value=Model.ItemUnitID TValue="int" Name="ItemUnitID" ValueProperty="ItemUnitID" TextProperty="ItemUnitName" FilterDelay="300" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" class="rz-w-100">
+
+                    </RadzenDropDown>
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="ItemUnitID" Text="Item unit is required." Popup="true" Style="display:block;z-index:100;" DefaultValue="0"></RadzenRequiredValidator>
+                </Helper>
+            </RadzenFormField>
+            <RadzenFormField Text="Pack Qty" class="rz-w-auto">
+                <ChildContent>
+                    <RadzenNumeric Name="PackQuantity" @bind-Value=Model.PackQuantity TValue="double" Placeholder="Pack Quantity" class="rz-w-100">
+
+                    </RadzenNumeric>
+                </ChildContent>
+            </RadzenFormField>
+
+            <RadzenFormField Text="Unit Weight" class="rz-w-auto">
+                <ChildContent>
+                    <RadzenNumeric Name="ItemWeight" @bind-Value=Model.ItemWeight TValue="double?" Placeholder="Weight" class="rz-w-100">
+
+                    </RadzenNumeric>
+                </ChildContent>
+            </RadzenFormField>
+
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+
+
+            <RadzenFormField Text="Purchase Price" class="rz-w-auto">
+                <ChildContent>
+                    <RadzenNumeric Name="PurchaseUnitPrice" @bind-Value=Model.PurchaseUnitPrice TValue="decimal" Placeholder="Price">
+
+                    </RadzenNumeric>
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="PurchaseUnitPrice" Popup="true" Text="Purchase price is required." Style="display:block;z-index:101;" />
+                </Helper>
+            </RadzenFormField>
+            <RadzenFormField Text="Cost Price" class="rz-w-auto">
+                <ChildContent>
+                    <RadzenNumeric Name="CostUnitPrice" @bind-Value=Model.CostUnitPrice TValue="decimal" Placeholder="Price">
+
+                    </RadzenNumeric>
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="PurchaseUnitPrice" Popup="true" Text="Purchase price is required." Style="display:block;z-index:101;" />
+                </Helper>
+            </RadzenFormField>
+            <RadzenFormField Text="Sell Price" class="rz-w-auto">
+                <ChildContent>
+                    <RadzenNumeric Name="SellingUnitPrice" @bind-Value=Model.SellingUnitPrice TValue="decimal" Placeholder="Sell Price">
+
+                    </RadzenNumeric>
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="SellingUnitPrice" Popup="true" Text="Sell price is required." Style="display:block;z-index:101;" />
+                </Helper>
+            </RadzenFormField>
+
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+
+            <RadzenFormField Text="Inward VAT" class="rz-w-50">
+                <ChildContent>
+                    <RadzenDropDown @ref=rddInwardTax Data=(null) @bind-Value=Model.ItemInwardTaxID TValue="int?" Name="ItemInwardTaxID" ValueProperty="TaxDetailID" TextProperty="TaxDetailName" FilterDelay="300" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" class="rz-w-100">
+
+                    </RadzenDropDown>
+                </ChildContent>
+            </RadzenFormField>
+
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem">
+
+
+                <RadzenCheckBox Name="IsInwardTax" @bind-Value="Model.IsInwardTax">
+
+                </RadzenCheckBox>
+                <RadzenText Text="Inward VAT" class="rz-mt-2">
+
+                </RadzenText>
+            </RadzenStack>
+
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+
+            <RadzenFormField Text="Outward VAT" class="rz-w-50">
+                <ChildContent>
+                    <RadzenDropDown @ref=rddOutwardTax Data=(null) @bind-Value=Model.ItemInwardTaxID TValue="int?" Name="ItemInwardTaxID" ValueProperty="TaxDetailID" TextProperty="TaxDetailName" FilterDelay="300" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" class="rz-w-100">
+
+                    </RadzenDropDown>
+                </ChildContent>
+            </RadzenFormField>
+
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem">
+
+
+                <RadzenCheckBox Name="IsOutwardTax" @bind-Value="Model.IsOutwardTax">
+
+                </RadzenCheckBox>
+                <RadzenText Text="Outward VAT" class="rz-mt-2">
+
+                </RadzenText>
+            </RadzenStack>
+
+        </RadzenStack>
+
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="Purchase Account" class="rz-w-50">
+                <ChildContent>
+                    <RadzenDropDown @ref=rddPurchaseAccount Data=purchaseAccountList @bind-Value=Model.PurchaseAccountID TValue="int?" Name="PurchaseAccountID" ValueProperty="AccountID" TextProperty="AccountName" FilterDelay="300" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" class="rz-w-100">
+
+                    </RadzenDropDown>
+                </ChildContent>
+            </RadzenFormField>
+            <RadzenFormField Text="Sale Account" class="rz-w-50">
+                <ChildContent>
+                    <RadzenDropDown @ref=rddSaleAccount Data=saleAccountList @bind-Value=Model.SaleAccountID TValue="int?" Name="SaleAccountID" ValueProperty="AccountID" TextProperty="AccountName" FilterDelay="300" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" class="rz-w-100">
+
+                    </RadzenDropDown>
+                </ChildContent>
+            </RadzenFormField>
+
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" Gap="0.25rem">
+            <RadzenFormField Text="CGS Account" class="rz-w-50">
+                <ChildContent>
+                    <RadzenDropDown @ref=rddCGSAccount Data=cgsAccountList @bind-Value=Model.CGSAccountID TValue="int?" Name="CGSAccountID" ValueProperty="AccountID" TextProperty="AccountName" FilterDelay="300" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" class="rz-w-100">
+
+                    </RadzenDropDown>
+                </ChildContent>
+            </RadzenFormField>
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem" class="rz-mt-1">
+                <RadzenCheckBox Name="IsActive" @bind-Value="Model.IsActive">
+
+                </RadzenCheckBox>
+                <RadzenText Text="Active" class="rz-mt-2">
+
+                </RadzenText>
+            </RadzenStack>
+
+
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem" class="rz-mt-1">
+            <RadzenFileInput @bind-Value=Model.ItemLogo TValue="string" class="rz-w-100 rz-mt-2">
+
+            </RadzenFileInput>
+        </RadzenStack>
+
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center" Gap="0.20rem">
+            <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Shade="Shade.Lighter" Text="@(id.HasValue? "Update":"Create")" BusyText="@(id.HasValue? "Update...":"Create...")" IsBusy="IsBusy" Disabled="IsBusy">
+
+            </RadzenButton>
+            <RadzenButton ButtonType="ButtonType.Button" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Shade="Shade.Lighter" Text="Cancel" Disabled="IsBusy" Click="@(()=>DialogService.CloseSide(null))">
+
+            </RadzenButton>
+
+        </RadzenStack>
+
+    </RadzenTemplateForm>
+
+
+
+</RadzenContentContainer>
+
+
+@code {
+
+    [Parameter]
+    public int? id { get; set; }
+
+    bool IsBusy;
+    bool rendered;
+
+    private Items Model = new Items();
+    private IEnumerable<ItemGroup> ItemGroupList = new List<ItemGroup>();
+    private IEnumerable<ItemUnit> ItemUnitList = new List<ItemUnit>();
+    private IEnumerable<vw_AccountDetail> saleAccountList = new List<vw_AccountDetail>();
+    private IEnumerable<vw_AccountDetail> purchaseAccountList = new List<vw_AccountDetail>();
+    private IEnumerable<vw_AccountDetail> cgsAccountList = new List<vw_AccountDetail>();
+
+    IEnumerable<int> itemTypeIDs = new int[]{1};
+    RadzenDropDown<int> rddItemGroup;
+    RadzenDropDown<int> rddItemUnit;
+    RadzenDropDown<int?>? rddInwardTax;
+    RadzenDropDown<int?>? rddOutwardTax;
+
+    RadzenDropDown<int?>? rddPurchaseAccount;
+    RadzenDropDown<int?>? rddSaleAccount;
+    RadzenDropDown<int?>? rddCGSAccount;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model.ItemTypeID = 1;
+        Model.CompanyID = 1;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (id.HasValue)
+            {
+
+                var result = await mediatR.Send(new GetItems { Id = id.Value });
+                if (result is not null)
+                {
+                    Model = result;
+
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            await FillGridDropdown("ItemGroup");
+            await FillGridDropdown("ItemUnit");
+            rendered = true;
+
+
+
+        }
+    }
+
+    public async Task FillGridDropdown(string key)
+    {
+
+        switch (key)
+        {
+            case "ItemGroup":
+                ItemGroupList = await (await mediatR.Send(new ReadItemGroup { filter = x => x.CompanyID == 1 })).ToListAsync();
+                break;
+            case "ItemUnit":
+                ItemUnitList = await (await mediatR.Send(new ReadItemUnit { filter = x => x.CompanyID == 1 })).ToListAsync();
+                break;
+            case "SaleAccountID":
+                saleAccountList = await (await mediatR.Send(new ReadAllAccountDetail { filter = x => x.CompanyID == 1 && x.AccountParentID != x.AccountID })).ToListAsync();
+                break;
+            case "PurchaseAccountID":
+                purchaseAccountList = await (await mediatR.Send(new ReadAllAccountDetail { filter = x => x.CompanyID == 1 && x.AccountParentID != x.AccountID })).ToListAsync();
+                break;
+            case "CGSAccountID":
+                cgsAccountList = await (await mediatR.Send(new ReadAllAccountDetail { filter = x => x.CompanyID == 1 && x.AccountParentID != x.AccountID })).ToListAsync();
+                break;
+
+
+        }
+
+
+    }
+
+
+    private async Task OnSubmit()
+    {
+        IsBusy = true;
+        GenericResult<Items> Result = new GenericResult<Items>();
+
+        try
+        {
+            await Task.Yield();
+
+            Model.ItemInwardTaxID = 1;
+            Model.ItemOutwardTaxID = 1;
+
+
+            if (id.HasValue)
+            {
+                Model.UpdatedDateAt = DateTime.UtcNow;
+                Model.UpdatedUserID = 1;
+                Result = await this.mediatR.Send(new UpdateItemsCommand { model = Model });
+            }
+            else
+            {
+                Model.CreatedDateAt = DateTime.UtcNow;
+                Model.CreatedUserID = 1;
+                Result = await this.mediatR.Send(new CreateItemsCommand { model = Model });
+            }
+
+
+
+            if (Result.Status)
+            {
+
+                if (Result.Data is not null)
+                {
+
+
+                    IsBusy = false;
+
+                    DialogService.CloseSide(Model);
+
+                }
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+    public void Dispose()
+    {
+        DialogService.Dispose();
+    }
+
+}

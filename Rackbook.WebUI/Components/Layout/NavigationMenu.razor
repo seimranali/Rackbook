@@ -1,0 +1,19 @@
+@inject NavigationManager navigationManager
+
+<RadzenPanelMenuItem Text="@NavigationItem.NavigationItemName" Path="@GetUrl()" Icon="@NavigationItem.NavigationItemIcon" aria-label="@NavigationItem.NavigationItemName">
+    @ChildContent
+</RadzenPanelMenuItem>
+
+@code {
+
+    [Parameter]
+    public NavigationItem NavigationItem { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+        string GetUrl()
+    {
+
+            return NavigationItem.NavigationItemPath == null ? NavigationItem.NavigationItemPath : $"{NavigationItem.NavigationItemPath}{new Uri(navigationManager.Uri).Query}";
+    }
+  
+}

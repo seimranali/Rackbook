@@ -1,0 +1,151 @@
+﻿@using Rackbook.Application
+@using Rackbook.Application.ManageItemUnit
+@using Rackbook.Application.ManageItemUnit.Queries
+@inject IMediator mediatR
+@inject DialogService DialogService
+<RadzenContentContainer>
+    <RadzenTemplateForm TItem="ItemUnit" Data="Model" Submit="OnSubmit">
+
+        <RadzenFormField Text="Item Unit Name" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextBox Name="ItemUnitName" @bind-Value=Model.ItemUnitName Placeholder="Item Unit Name">
+
+                </RadzenTextBox>
+            </ChildContent>
+            <Helper>
+                <RadzenRequiredValidator Component="ItemUnitName" Popup="true" Text="Item unit name is required." Style="display:block;z-index:1000;" />
+            </Helper>
+        </RadzenFormField>
+
+        <RadzenFormField Text="Item Unit Description" class="rz-w-100">
+            <ChildContent>
+                <RadzenTextArea Name="ItemUnitDescription" @bind-Value=Model.ItemUnitDescription Cols="68" Rows="2" Placeholder="Item Unit Description">
+
+                </RadzenTextArea>
+            </ChildContent>
+        </RadzenFormField>
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="1rem">
+            <RadzenFormField Text="Sort Order" class="w-25">
+                <ChildContent>
+                    <RadzenNumeric Min="0" Step="1" Name="SortOrder" @bind-Value=Model.SortOrder>
+
+                    </RadzenNumeric>
+                </ChildContent>
+            </RadzenFormField>
+
+            <RadzenCheckBox Name="IsActive" @bind-Value="Model.IsActive">
+
+            </RadzenCheckBox>
+            <RadzenText Text="Active">
+
+            </RadzenText>
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center" Gap="0.20rem" class="rz-mt-2">
+            <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Shade="Shade.Lighter" Text="@(id.HasValue? "Update":"Create")" BusyText="@(id.HasValue? "Update...":"Create...")" IsBusy="IsBusy" Disabled="IsBusy">
+
+            </RadzenButton>
+            <RadzenButton ButtonType="ButtonType.Button" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Shade="Shade.Lighter" Text="Cancel" Disabled="IsBusy" Click="@(()=>DialogService.CloseSide(null))">
+
+            </RadzenButton>
+
+        </RadzenStack>
+
+    </RadzenTemplateForm>
+
+
+
+</RadzenContentContainer>
+
+
+@code {
+
+    [Parameter]
+    public int? id { get; set; }
+
+    bool IsBusy;
+    bool rendered;
+
+    ItemUnit Model = new ItemUnit();
+    GenericResult<ItemUnit> Result;
+
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (id.HasValue)
+            {
+
+                var result = await mediatR.Send(new GetItemUnit { Id = id.Value });
+                if (result is not null)
+                {
+                    Model = result;
+                    
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            rendered = true;
+            
+        }
+    }
+
+
+    async Task OnSubmit()
+    {
+        Result = new GenericResult<ItemUnit>();
+        try
+        {
+            await Task.Yield();
+
+            Model.CompanyID = 1;
+
+            if (!id.HasValue)
+                Result = await this.mediatR.Send(new CreateItemUnitCommand() { model = Model });
+            else
+                Result = await this.mediatR.Send(new UpdateItemUnitCommand() { model = Model });
+
+
+
+            if (Result is not null)
+            {
+                if (Result.Status)
+                {
+                    if (Result.Data is not null)
+                    {
+
+                        
+                        await Task.Delay(500);
+                        DialogService.CloseSide(Model);
+                    }
+                }
+                else
+                {
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
+        }
+    }
+
+
+}
