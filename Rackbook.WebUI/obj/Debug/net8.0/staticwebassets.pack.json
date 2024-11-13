@@ -1,27 +1,27 @@
 {
   "Files": [
     {
-      "Id": "D:\\Rackbook\\Rackbook.WebUI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Rackbook.WebUI.bundle.scp.css",
+      "Id": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Rackbook.WebUI.bundle.scp.css",
       "PackagePath": "staticwebassets\\Rackbook.WebUI.jip6pq7flw.bundle.scp.css"
     },
     {
-      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\Images\\background_image_overlay.jpg",
+      "Id": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\wwwroot\\Images\\background_image_overlay.jpg",
       "PackagePath": "staticwebassets\\Images\\background_image_overlay.jpg"
     },
     {
-      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\Images\\background_image_overlay.png",
+      "Id": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\wwwroot\\Images\\background_image_overlay.png",
       "PackagePath": "staticwebassets\\Images\\background_image_overlay.png"
     },
     {
-      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\app.css",
+      "Id": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\js\\boot.js",
+      "Id": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\wwwroot\\js\\boot.js",
       "PackagePath": "staticwebassets\\js\\boot.js"
     },
     {
-      "Id": "D:\\Rackbook\\Rackbook.WebUI\\wwwroot\\notfound.html",
+      "Id": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\wwwroot\\notfound.html",
       "PackagePath": "staticwebassets\\notfound.html"
     },
     {

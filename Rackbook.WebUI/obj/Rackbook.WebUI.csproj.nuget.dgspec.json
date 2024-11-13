@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Rackbook\\Rackbook.WebUI\\Rackbook.WebUI.csproj": {}
+    "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\Rackbook.WebUI.csproj": {}
   },
   "projects": {
-    "D:\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj": {
+    "D:\\Rackbookgit\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj",
+        "projectUniqueName": "D:\\Rackbookgit\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj",
         "projectName": "Rackbook.Application",
-        "projectPath": "D:\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj",
+        "projectPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Rackbook\\Rackbook.Application\\obj\\",
+        "outputPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -34,8 +34,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj": {
-                "projectPath": "D:\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj"
+              "D:\\Rackbookgit\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj": {
+                "projectPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj"
               }
             }
           }
@@ -86,14 +86,14 @@
         }
       }
     },
-    "D:\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj": {
+    "D:\\Rackbookgit\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj",
+        "projectUniqueName": "D:\\Rackbookgit\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj",
         "projectName": "Rackbook.Domain",
-        "projectPath": "D:\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj",
+        "projectPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Rackbook\\Rackbook.Domain\\obj\\",
+        "outputPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -135,7 +135,7 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore.Abstractions": {
               "target": "Package",
-              "version": "[8.0.10, )"
+              "version": "[9.0.0, )"
             }
           },
           "imports": [
@@ -164,14 +164,14 @@
         }
       }
     },
-    "D:\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj": {
+    "D:\\Rackbookgit\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Rackbookgit\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj",
         "projectName": "Rackbook.Infrastructure",
-        "projectPath": "D:\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj",
+        "projectPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Infrastructure\\Rackbook.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Rackbook\\Rackbook.Infrastructure\\obj\\",
+        "outputPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -194,8 +194,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj": {
-                "projectPath": "D:\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj"
+              "D:\\Rackbookgit\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj": {
+                "projectPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj"
               }
             }
           }
@@ -217,15 +217,15 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.10, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Abstractions": {
               "target": "Package",
-              "version": "[8.0.10, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.10, )"
+              "version": "[9.0.0, )"
             }
           },
           "imports": [
@@ -254,14 +254,14 @@
         }
       }
     },
-    "D:\\Rackbook\\Rackbook.WebUI\\Rackbook.WebUI.csproj": {
+    "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\Rackbook.WebUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Rackbook\\Rackbook.WebUI\\Rackbook.WebUI.csproj",
+        "projectUniqueName": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\Rackbook.WebUI.csproj",
         "projectName": "Rackbook.WebUI",
-        "projectPath": "D:\\Rackbook\\Rackbook.WebUI\\Rackbook.WebUI.csproj",
+        "projectPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\Rackbook.WebUI.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Rackbook\\Rackbook.WebUI\\obj\\",
+        "outputPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.WebUI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -284,8 +284,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj": {
-                "projectPath": "D:\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj"
+              "D:\\Rackbookgit\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj": {
+                "projectPath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Application\\Rackbook.Application.csproj"
               }
             }
           }
@@ -307,7 +307,7 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.10, )"
+              "version": "[9.0.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
@@ -315,7 +315,7 @@
             },
             "Radzen.Blazor": {
               "target": "Package",
-              "version": "[5.5.5, )"
+              "version": "[5.6.0, )"
             }
           },
           "imports": [
