@@ -116,6 +116,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQdWJsaWNcX0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Rackbookgit/Rackbook/Rackbook.WebUI/Components/Pages/SaleOrderPages/SaleOrderPage.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTYWxlT3JkZXJQYWdlc1xTYWxlT3JkZXJQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Rackbookgit/Rackbook/Rackbook.WebUI/Components/Pages/UserRolePages/UserRolePage.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyUm9sZVBhZ2VzXFVzZXJSb2xlUGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,0 +1,16 @@
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\bin\Debug\net9.0\Rackbook.Infrastructure.deps.json
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\bin\Debug\net9.0\Rackbook.Infrastructure.dll
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\bin\Debug\net9.0\Rackbook.Infrastructure.pdb
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\bin\Debug\net9.0\Rackbook.Domain.dll
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\bin\Debug\net9.0\Rackbook.Domain.pdb
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.Infrastructure.csproj.AssemblyReference.cache
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.Infrastructure.AssemblyInfoInputs.cache
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.Infrastructure.AssemblyInfo.cs
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.Infrastructure.sourcelink.json
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.B12BB6ED.Up2Date
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.Infrastructure.dll
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\refint\Rackbook.Infrastructure.dll
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\Rackbook.Infrastructure.pdb
+D:\Rackbookgit\Rackbook\Rackbook.Infrastructure\obj\Debug\net9.0\ref\Rackbook.Infrastructure.dll

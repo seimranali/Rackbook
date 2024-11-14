@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "QKry/2nv/Mw=",
+  "dgSpecHash": "Wrdddkfecd4=",
   "success": true,
   "projectFilePath": "D:\\Rackbookgit\\Rackbook\\Rackbook.Domain\\Rackbook.Domain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.0\\microsoft.entityframeworkcore.abstractions.9.0.0.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.100\\microsoft.net.sdk.compilers.toolset.9.0.100.nupkg.sha512"
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.0\\microsoft.entityframeworkcore.abstractions.9.0.0.nupkg.sha512"
   ],
   "logs": []
 }

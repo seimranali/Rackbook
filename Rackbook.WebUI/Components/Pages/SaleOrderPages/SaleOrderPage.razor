@@ -1,0 +1,635 @@
+﻿@page "/saleorder"
+@using Rackbook.Application.ManageCustomers.Queries
+@using Rackbook.Application.ManageItems.Queries
+@using Rackbook.Application.ManageSaleOrder
+@using Rackbook.Domain.Models
+@inject IMediator mediatR
+@inject DialogService DialogService
+
+<RadzenContentContainer>
+
+
+    <RadzenRow>
+
+        <RadzenColumn Size="8" SizeLG="8" SizeMD="8">
+            <RadzenText Text="Sale Order" TagName="TagName.H5" TextStyle="TextStyle.DisplayH5">
+
+            </RadzenText>
+        </RadzenColumn>
+        <RadzenColumn Size="4" SizeLG="4" SizeMD="4">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.25rem">
+
+                <RadzenBreadCrumb>
+                    <Template Context="item">
+                        <RadzenBadge IsPill="true" Text="@item.Text"></RadzenBadge>
+                    </Template>
+                    <ChildContent>
+                        <RadzenBreadCrumbItem Text="Sales"></RadzenBreadCrumbItem>
+                        <RadzenBreadCrumbItem Text="Sale Order" Icon="add"></RadzenBreadCrumbItem>
+                    </ChildContent>
+                </RadzenBreadCrumb>
+
+            </RadzenStack>
+
+        </RadzenColumn>
+
+    </RadzenRow>
+
+
+
+    <RadzenCard>
+
+
+        <!-- Sale Order Master View Design -->
+
+        <RadzenTemplateForm Data=model TItem="SaleOrderModel" Submit=OnCreate>
+
+
+            <RadzenRow>
+                <RadzenColumn Size="6" SizeLG="6" SizeXS="12">
+                    <RadzenFormField Text="Order Date" class="rz-w-100">
+
+                        <ChildContent>
+                            <RadzenDatePicker Name="SaleOrderDate" @bind-Value=model.SaleOrderMaster.SaleOrderDate TValue="DateTime" DateFormat="dd/MM/yyyy" class="rz-w-100">
+                            </RadzenDatePicker>
+                        </ChildContent>
+                        <Helper>
+                            <RadzenRequiredValidator Component="SaleOrderDate" Text="Sale order date is required" Popup="true" Style="display:block;z-index:1000">
+
+                            </RadzenRequiredValidator>
+                        </Helper>
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="6" SizeLG="6" SizeXS="12">
+                    <RadzenFormField Text="Order Number" class="rz-w-100">
+                        <ChildContent>
+                            <RadzenTextBox Name="SaleOrderNumber" @bind-Value=model.SaleOrderMaster.SaleOrderNumber Placeholder="Sale Order Number" class="rz-w-100">
+
+                            </RadzenTextBox>
+                        </ChildContent>
+                        <Helper>
+                            <RadzenRequiredValidator Component="SaleOrderNumber" Text="Sale order number is required" Popup="true" Style="display:block;z-index:1001;">
+
+                            </RadzenRequiredValidator>
+                        </Helper>
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenRow>
+                <RadzenColumn Size="6" SizeLG="6">
+                    <RadzenFormField Text="Customer" class="rz-w-100">
+
+                        <RadzenDropDownDataGrid TValue="int"
+                                                @ref=rddCustomer
+                                                Name="CustomerID"
+                                                @bind-Value=model.SaleOrderMaster.CustomerId
+                                                Data=customerList
+                                                LoadData=LoadDataCustomer
+                                                Count=CustomerCount
+                                                PageSize="10"
+                                                ValueProperty="CustomerID"
+                                                TextProperty="CustomerName"
+                                                FilterDelay="300"
+                                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" class="rz-w-100">
+
+                            <Columns>
+                                <RadzenDropDownDataGridColumn Property="CustomerCode" Title="Customer Code">
+
+                                </RadzenDropDownDataGridColumn>
+                                <RadzenDropDownDataGridColumn Property="CustomerName" Title="CustomerName">
+
+                                </RadzenDropDownDataGridColumn>
+                            </Columns>
+
+                        </RadzenDropDownDataGrid>
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="6" SizeLG="6">
+                    <RadzenFormField Text="Sale Person" class="rz-w-100">
+                        <RadzenTextBox Name="SalePerson" @bind-Value=model.SaleOrderMaster.SalePerson Placeholder="Sale Person" class="rz-w-100">
+
+                        </RadzenTextBox>
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenRow>
+                <RadzenColumn Size="6" SizeLG="6">
+                    <RadzenFormField Text="Remarks" class="rz-w-100">
+                        <RadzenTextArea Cols="68" Rows="3" Name="Remarks" @bind-Value=model.SaleOrderMaster.Remarks Placeholder="Remarks" class="rz-w-100">
+
+                        </RadzenTextArea>
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="6" SizeLG="6">
+                    <RadzenFormField Text="Terms & Condition" class="rz-w-100">
+                        <RadzenTextArea Cols="68" Rows="3" Name="Terms_And_Condition" @bind-Value=model.SaleOrderMaster.Terms_And_Condition Placeholder="Terms and Condition" class="rz-w-100">
+
+                        </RadzenTextArea>
+                    </RadzenFormField>
+                </RadzenColumn>
+
+            </RadzenRow>
+
+
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Start" class="rz-mt-2 rz-mb-2">
+
+                <RadzenButton ButtonStyle="ButtonStyle.Primary" Shade="Shade.Lighter" Variant="Variant.Flat" Size="ButtonSize.Medium" Text="Add Line" Icon="list" Click="@((args)=> AddRow())">
+
+                </RadzenButton>
+
+            </RadzenStack>
+
+
+
+            <RadzenDataGrid Data="model.SaleOrderDetails" @ref=grid>
+
+                <Columns>
+
+                    <RadzenDataGridColumn Property="ItemID" Title="Item Detail" TItem="SaleOrderDetail">
+                        <Template Context="item">
+                            <span>@item.ItemName</span>
+                        </Template>
+                        <EditTemplate Context="item">
+                            <RadzenDropDownDataGrid @ref=rddItem
+                                                    Name="ItemID"
+                                                    @bind-Value=item.ItemID
+                                                    Data=itemList
+                                                    LoadData=LoadDataItems
+                                                    Count="ItemCount"
+                                                    PageSize="5"
+                                                    ValueProperty="ItemID"
+                                                    TextProperty="ItemName" Change="@(()=> OnChangeItem(item))" class="rz-w-100">
+
+
+                                <Columns>
+                                    <RadzenDropDownDataGridColumn Property="ItemCode" Title="Item Code">
+
+                                    </RadzenDropDownDataGridColumn>
+                                    <RadzenDropDownDataGridColumn Property="ItemName" Title="Item Name">
+
+                                    </RadzenDropDownDataGridColumn>
+                                </Columns>
+                            </RadzenDropDownDataGrid>
+                        </EditTemplate>
+                        <FooterTemplate>
+                            <RadzenLabel>Total</RadzenLabel>
+                        </FooterTemplate>
+                    </RadzenDataGridColumn>
+
+                    <RadzenDataGridColumn Property="Quantity" Title="Quantity" TItem="SaleOrderDetail" HeaderCssClass="rz-info-lighter" CssClass="rz-info-lighter">
+                        <Template Context="item">
+                            <span>@item.Quantity</span>
+                        </Template>
+                        <EditTemplate Context="item">
+                            <RadzenNumeric Name="Quantity" @bind-Value=item.Quantity TValue="decimal" class="rz-w-100">
+
+                            </RadzenNumeric>
+                        </EditTemplate>
+                        <FooterTemplate>
+                            <RadzenLabel>@(model.SaleOrderDetails.Sum(s=> s.Quantity))</RadzenLabel>
+                        </FooterTemplate>
+                    </RadzenDataGridColumn>
+
+                    <RadzenDataGridColumn Property="UnitPrice" Title="Price" TItem="SaleOrderDetail" HeaderCssClass="rz-info-lighter" CssClass="rz-info-lighter">
+                        <Template Context="item">
+                            <span>@item.UnitPrice</span>
+                        </Template>
+                        <EditTemplate Context="item">
+                            <RadzenNumeric Name="UnitPrice" @bind-Value=item.UnitPrice TValue="decimal" class="rz-w-100">
+
+                            </RadzenNumeric>
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+                    <RadzenDataGridColumn Property="TotalAmount" Title="Total Amount" TItem="SaleOrderDetail">
+                        <Template Context="item">
+                            <span>@item.TotalAmount</span>
+                        </Template>
+                        <EditTemplate Context="item">
+                            <RadzenNumeric Name="TotalAmount" @bind-Value=item.TotalAmount TValue="decimal" class="rz-w-100">
+
+                            </RadzenNumeric>
+                        </EditTemplate>
+                        <FooterTemplate>
+                            <RadzenLabel>@(model.SaleOrderDetails.Sum(s=> s.TotalAmount))</RadzenLabel>
+                        </FooterTemplate>
+                    </RadzenDataGridColumn>
+
+                    <RadzenDataGridColumn Property="SaleOrderDetailID" Title="Action">
+                        <Template Context="item">
+                            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="0.25rem">
+                                <RadzenButton ButtonStyle="ButtonStyle.Warning" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" Icon="edit" Click="@(()=> EditRow(item))">
+
+                                </RadzenButton>
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" Icon="delete" Click="@(()=> RemoveRow(item))">
+
+                                </RadzenButton>
+                            </RadzenStack>
+                        </Template>
+                        <EditTemplate Context="item">
+                            <RadzenButton ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" Icon="check" Click="@(()=> SaveRow(item))">
+
+                            </RadzenButton>
+                            <RadzenButton ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" Icon="close" Click="@(()=> CancelRow(item))">
+
+                            </RadzenButton>
+                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Small" Icon="delete" Click="@(()=> RemoveRow(item))">
+
+                            </RadzenButton>
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+                </Columns>
+
+
+            </RadzenDataGrid>
+
+
+
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.25rem" class="rz-mt-3">
+
+                <RadzenButton ButtonStyle="ButtonStyle.Secondary" Shade="Shade.Lighter" Variant="Variant.Flat" Text="Create" ButtonType="ButtonType.Submit">
+
+                </RadzenButton>
+
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Shade="Shade.Lighter" Variant="Variant.Flat" Text="Cancel" ButtonType="ButtonType.Button">
+
+                </RadzenButton>
+
+
+            </RadzenStack>
+
+
+
+        </RadzenTemplateForm>
+
+
+
+
+
+
+    </RadzenCard>
+
+
+
+
+
+
+
+
+
+</RadzenContentContainer>
+
+
+
+
+
+
+@code {
+
+
+    SaleOrderModel model = new SaleOrderModel();
+
+
+    List<Customers> customerList = new List<Customers>();
+    List<vw_Items> itemList = new List<vw_Items>();
+
+
+    RadzenDropDownDataGrid<int>? rddItem;
+    RadzenDropDownDataGrid<int>? rddCustomer;
+
+    SaleOrderDetail SaleOrderDetailInsert;
+    SaleOrderDetail SaleOrderDetailUpdate;
+
+    RadzenDataGrid<SaleOrderDetail>? grid;
+
+
+    int CustomerCount;
+    bool IsCustomerLoading;
+
+    int ItemCount;
+    bool IsItemLoading;
+
+
+    bool IsBusy;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        model.SaleOrderMaster = new SaleOrderMaster();
+        model.SaleOrderDetails = new List<SaleOrderDetail>();
+
+
+        await LoadDataCustomer(new LoadDataArgs { Skip = 0, Top = 10 });
+        await LoadDataItems(new LoadDataArgs { Skip = 0, Top = 5 });
+
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    protected override Task OnParametersSetAsync()
+    {
+        return base.OnParametersSetAsync();
+    }
+
+
+    private async Task OnCreate()
+    {
+        IsBusy = true;
+
+        try
+        {
+            await Task.Yield();
+
+
+            model.SaleOrderMaster.CreatedDateAt = DateTime.Now;
+            model.SaleOrderMaster.CreatedUserID = 1;
+
+
+            model.SaleOrderMaster.TotalQuantity = model.SaleOrderDetails.Sum(s => s.Quantity);
+            model.SaleOrderMaster.TotalAmount = model.SaleOrderDetails.Sum(s => s.TotalAmount);
+
+
+
+            var Result = await mediatR.Send(new CreateSaleOrderCommand { model = model });
+
+
+            if (Result is not null)
+            {
+                if (Result.Status)
+                {
+                    await DialogService.Alert(Result.Message);
+
+                    model = new();
+                    model.SaleOrderMaster = new();
+                    model.SaleOrderDetails = new();
+                }
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+    }
+
+    private async Task LoadDataCustomer(LoadDataArgs args)
+    {
+
+        IsCustomerLoading = true;
+
+        try
+        {
+
+
+            await Task.Yield();
+
+
+            IQueryable<Customers> query = await mediatR.Send(new ReadCustomers { orderBy = x => x.OrderBy(o => o.CustomerName) });
+
+
+            if (args is not null)
+            {
+                if (!string.IsNullOrEmpty(args.Filter))
+                    query = query.Where(args.Filter);
+
+                if (!string.IsNullOrEmpty(args.OrderBy))
+                    query = query.OrderBy(args.OrderBy);
+                else
+                    query = query.OrderBy(o => o.CustomerName);
+
+
+
+                CustomerCount = query.Count();
+
+
+                if (args.Skip.HasValue && args.Top.HasValue)
+                    query.Skip(args.Skip.Value).Take(args.Top.Value);
+                else
+                    query.Skip(0).Take(10);
+
+
+
+
+
+                customerList = await query.ToListAsync();
+
+
+            }
+
+
+
+            IsCustomerLoading = false;
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
+    }
+
+
+
+    private async Task OnChangeItem(SaleOrderDetail item)
+    {
+        try
+        {
+
+            if (rddItem is not null)
+            {
+                var _item = (vw_Items)rddItem.SelectedItem;
+                if (_item is not null)
+                {
+                    item.ItemName = _item.ItemName;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+    private async Task LoadDataItems(LoadDataArgs args)
+    {
+        IsItemLoading = true;
+        try
+        {
+
+            await Task.Yield();
+
+
+
+            IQueryable<vw_Items> query = await this.mediatR.Send(new ReadAllItems { });
+
+
+            if (args is not null)
+            {
+
+                if (!string.IsNullOrEmpty(args.Filter))
+                    query = query.Where(args.Filter);
+
+                if (!string.IsNullOrEmpty(args.OrderBy))
+                    query = query.OrderBy(args.OrderBy);
+                else
+                    query = query.OrderBy(o => o.ItemName);
+
+
+                ItemCount = query.Count();
+
+
+
+                if (args.Skip.HasValue && args.Top.HasValue)
+                    query = query.Skip(args.Skip.Value).Take(args.Top.Value);
+                else
+                    query = query.Skip(0).Take(5);
+
+
+                itemList = await query.ToListAsync();
+
+
+            }
+
+
+            IsItemLoading = false;
+
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
+    }
+
+    private async Task AddRow()
+    {
+        try
+        {
+
+
+            SaleOrderDetailInsert = new SaleOrderDetail();
+            model.SaleOrderDetails.Insert(0, SaleOrderDetailInsert);
+
+
+            await grid.InsertRow(SaleOrderDetailInsert);
+
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+    private async Task EditRow(SaleOrderDetail item)
+    {
+
+        try
+        {
+
+            SaleOrderDetailInsert = null;
+            SaleOrderDetailUpdate = item;
+
+
+            await grid.EditRow(SaleOrderDetailUpdate);
+
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+    private async Task CancelRow(SaleOrderDetail item)
+    {
+
+
+        try
+        {
+
+
+            if (item == SaleOrderDetailInsert)
+            {
+                SaleOrderDetailInsert = null;
+                model.SaleOrderDetails.Remove(item);
+            }
+            SaleOrderDetailUpdate = null;
+
+            grid.CancelEditRow(item);
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
+    }
+
+
+    private async Task RemoveRow(SaleOrderDetail item)
+    {
+
+        try
+        {
+
+            SaleOrderDetailInsert = null;
+            SaleOrderDetailUpdate = null;
+
+
+            model.SaleOrderDetails.Remove(item);
+
+            await grid.Reload();
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
+
+    }
+
+
+    private async Task SaveRow(SaleOrderDetail item)
+    {
+
+        try
+        {
+
+            if (item == SaleOrderDetailInsert)
+            {
+                SaleOrderDetailInsert = null;
+
+            }
+
+            await grid.UpdateRow(item);
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+
+}

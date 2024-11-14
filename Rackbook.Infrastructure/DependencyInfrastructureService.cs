@@ -31,6 +31,8 @@ namespace Rackbook.Infrastructure
             services.AddScoped<INavigationItemRepository, NavigationItemRepository>();
             services.AddScoped<ICustomersRepository, CustomersRepository>();
             services.AddScoped<ICustomersAddressRepository, CustomersAddressRepository>();
+            services.AddScoped<ISaleOrderMasterRepository, SaleOrderMasterRepository>();
+            services.AddScoped<ISaleOrderDetailRepository, SaleOrderDetailRepository>();
 
         }
     }

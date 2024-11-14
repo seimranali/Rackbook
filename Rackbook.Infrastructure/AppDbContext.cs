@@ -39,6 +39,8 @@ namespace Rackbook.Infrastructure
         public DbSet<NavigationItem> NavigationItem { get; set; }
         public DbSet<Customers> Customers { get; set; }
         public DbSet<CustomersAddress> CustomersAddress { get; set; }
+        public DbSet<SaleOrderMaster> SaleOrderMaster { get; set; }
+        public DbSet<SaleOrderDetail> SaleOrderDetail { get; set; }
 
 
         protected void Disposed(bool disposing)
